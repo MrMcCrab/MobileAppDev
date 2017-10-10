@@ -19,7 +19,7 @@ npm-debug.log*
 .versions/
 coverage/
 dist/
-node_modules/**/*
+node_modules/
 !node_modules/angularfire2/app/firebase.app.module.d.ts
 !node_modules/angularfire2/database/firebase_list_observable.d.ts
 !node_modules/angularfire2/database/firebase_object_observable.d.ts

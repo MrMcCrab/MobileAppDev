@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, IonicPage, NavParams } from 'ionic-angular';
 import { AuthService } from '../../providers/auth-service/auth-service';
-
+import { FirebaseProvider } from './../../providers/firebase/firebase';
+import { FirebaseListObservable } from 'angularfire2/database';
 
 
 @IonicPage()
@@ -10,17 +11,26 @@ import { AuthService } from '../../providers/auth-service/auth-service';
   templateUrl: 'home.html'
 })
 export class HomePage {
-
+  shoppingItems: FirebaseListObservable<any[]>;
+  newItem = '';
 
   username = '';
   email = '';
 
-  constructor(private navCtrl: NavController, private auth: AuthService, public navParams: NavParams) {
+  constructor(private navCtrl: NavController, private auth: AuthService, public navParams: NavParams, public firebaseProvider: FirebaseProvider) {
     let info = this.auth.getUserInfo();
     this.username = info['name'];
     this.email = info['email'];
+    this.shoppingItems = this.firebaseProvider.getShoppingItems();
   }
 
+  addItem() {
+    this.firebaseProvider.addItem(this.newItem);
+  }
+ 
+  removeItem(id) {
+    this.firebaseProvider.removeItem(id);
+  }
 
  
   public logout() {
